@@ -1,7 +1,11 @@
+import NatiqContents from "../components/NatiqContents";
+import Navbar from "../components/Navbar";
+
 export default function Natiq() {
     return (
         <>
-            <h1>Natiq</h1>
+            <Navbar />
+            <NatiqContents />
         </>
     );
 }
