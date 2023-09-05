@@ -1,7 +1,7 @@
 version: "3.8"
 services:
     natiq:
-        build: .
+        build: ./Natiq
         container_name: natiq_c
         ports:
             - '3000:3000'
