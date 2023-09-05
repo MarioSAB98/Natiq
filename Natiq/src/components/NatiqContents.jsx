@@ -12,7 +12,7 @@ export default function NatiqContents() {
 
 
     const checkChars = (e) => {
-        const regex = /^[\u0621-\u064A ]+$/;
+        const regex = /^[\u0621-\u064A . ]+$/;
         if (e.target.value === "" || regex.test(e.target.value)) {
             setVal(e.target.value);
         }
