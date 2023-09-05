@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
-import AudioPlayer from './AudioPlayer';
+import Player from './AudioPlayer';
 import { decode } from 'url-safe-base64';
 import { isBase64 } from 'url-safe-base64';
-import Player from './Player';
-import { trim } from 'url-safe-base64';
 
 
 export default function NatiqContents() {
     const [loading, setLoading] = useState(false);
     const [audio, setAudio] = useState();
+    // const [lastWordAudio, setLastWordAudio] = useState();
     const [errorMSG, setErrorMSG] = useState("");
 
 
@@ -17,16 +16,16 @@ export default function NatiqContents() {
     return (
         <>
             <div dir="ltr" className="relative w-full">
-                <textarea disabled={loading ? true : false} id="textArea" dir="rtl" className="textarea textarea-primary m-12 mb-0 h-80 w-[80%] text-right" placeholder="اكتب النص هنا..."></textarea>
+                <textarea disabled={loading ? true : false} id="textArea" dir="rtl" className=" shadow-[0px_0px_20px_0px_rgba(0,0,0,0.3)] textarea textarea-primary m-12 mb-0 h-80 w-[80%] text-right" placeholder="اكتب النص هنا..."></textarea>
                 {loading && <span className="absolute top-[40%] left-[50%] loading loading-spinner text-primary"></span>}
                 <div className="flex-row">
                     <button disabled={loading ? "disabled" : ""}
                         onClick={() => { callNatiq(setLoading, setAudio, setErrorMSG) }}
-                        className="btn btn-primary m-8 w-32 text-white">Echo</button>
-                    <button disabled={loading ? "disabled" : ""} onClick={clear} className="btn btn-primary m-8 w-32 text-white">Reset</button>
+                        className=" shadow-[0px_0px_20px_5px_rgba(0,0,0,0.3)] btn btn-primary m-8 w-32 text-white">Echo</button>
+                    <button disabled={loading ? "disabled" : ""} onClick={() => { clear(setErrorMSG) }} className=" shadow-[0px_0px_20px_5px_rgba(0,0,0,0.3)] btn btn-primary m-8 w-32 text-white">Reset</button>
                 </div>
             </div>
-            {audio && <AudioPlayer audio={audio} />}
+            {audio && <Player audio={audio} />}
 
 
             {errorMSG && <div className="toast toast-center">
@@ -40,16 +39,25 @@ export default function NatiqContents() {
 }
 
 
-const clear = () => {
+const clear = (setErrorMSG) => {
+    setErrorMSG("");
     var textArea = document.getElementById("textArea");
     textArea.value = "";
 }
 
 const callNatiq = (setLoading, setAudio, setErrorMSG) => {
     setAudio("");
+    setErrorMSG("");
     setLoading(true);
-    var textArea = document.getElementById("textArea");
-    const textData = textArea.value;
+    let textArea = document.getElementById("textArea");
+    let textData = textArea.value;
+
+    if (textArea.value) {
+        let lastWord = textArea.value.split(" ");
+        lastWord = lastWord[lastWord.length - 1];
+        textData = textData + lastWord + lastWord;
+    }
+
     var formdata = { text: textData };
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -63,15 +71,19 @@ const callNatiq = (setLoading, setAudio, setErrorMSG) => {
         .then(response => { setLoading(false); return (response.json()) })
         .then(result => {
             console.log(result);
-            const { wave } = result;
-            let wave_base64 = decode(wave);
+            const { wave, description } = result;
+            if (wave) {
+                let wave_base64 = decode(wave);
 
-
-            if (isBase64(wave_base64)) {
-                setAudio(wave_base64);
+                if (isBase64(wave_base64)) {
+                    setAudio(wave_base64);
+                }
             }
-            const { description } = result;
-            setErrorMSG(description);
+
+            if (description) {
+                setErrorMSG(description);
+            }
+
         })
         .catch(error => console.log('error', error));
 }

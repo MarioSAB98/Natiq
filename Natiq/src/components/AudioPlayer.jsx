@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 export default function AudioPlayer({ audio }) {
 
@@ -6,41 +6,29 @@ export default function AudioPlayer({ audio }) {
 
     return (
         <div className="w-full">
-            <div className='flex w-8/12  bg-white shadow-md shadow-primary rounded-lg overflow-hidden mx-auto'>
+            <div className='flex  bg-primary shadow-[0px_0px_20px_5px_rgba(0,0,0,0.3)] shadow-primary rounded-full overflow-hidden mx-auto w-[40%] h-16'>
                 <div className="flex flex-col w-full">
 
 
-                    <div className="flex flex-col sm:flex-row items-center p-5">
-                        <div className="flex items-center">
-                            <div className="flex space-x-3 p-2">
-
-                                {/* back button */}
-                                <button className="focus:outline-none">
-                                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#570df8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg>
-                                </button>
+                    <div className="flex flex-col sm:flex-row items-center relative">
+                        <div className="flex items-center absolute top-[0%] left-[45%]">
+                            <div className="flex pt-2">
 
                                 {/* play button */}
-                                <button onClick={toggle} className="rounded-full w-10 h-10 flex items-center justify-center pl-0.5 ring-1 ring-primary focus:outline-none">
-                                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#570df8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                </button>
+                                <button onClick={toggle}>
+                                    {!playing ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="hsl(var(--nc))" className="w-12 h-12">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" />
+                                    </svg>
 
-                                {/* forward button */}
-                                <button className="focus:outline-none">
-                                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#570df8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+                                        : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="hsl(var(--nc))" className="w-12 h-12">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M14.25 9v6m-4.5 0V9M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+
+                                    }
                                 </button>
                             </div>
                         </div>
-                        <div className="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2">
-                            <div className="bg-secondary h-2 w-full rounded-lg"></div>
-                            <div className="bg-primary h-2 w-1/2 rounded-lg absolute top-0"></div>
-
-                        </div>
-                        <div className="flex justify-end w-full sm:w-auto pt-1 sm:pt-0">
-                            <span className="text-xs text-primary uppercase font-medium pl-2">
-                                02:00/04:00
-                            </span>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -56,29 +44,28 @@ export default function AudioPlayer({ audio }) {
 
 
 const useAudio = (audio) => {
-    let speech = new Audio("data:audio/wav;base64," + audio);
-    const [playing, setPlaying] = useState(false);
-
+    let speech = useRef(new Audio("data:audio/wav;base64," + audio));
+    const [playing, setPlaying] = useState(true);
     const toggle = () => setPlaying(!playing);
 
     useEffect(() => {
-        playing ? speech.play() : speech.pause();
+        playing ? speech.current.play() : speech.current.pause();
     },
         [playing]
     );
 
     useEffect(() => {
-        speech.addEventListener('ended', () => setPlaying(false));
+        speech.current.addEventListener('ended', () => setPlaying(false));
         return () => {
-            speech.removeEventListener('ended', () => setPlaying(false));
+            speech.current.removeEventListener('ended', () => setPlaying(false));
         };
     }, []);
 
     return [playing, toggle];
 };
 
-// const Player = ({ url }) => {
-//     const [playing, toggle] = useAudio(url);
+// const Player = ({ audio }) => {
+//     const [playing, toggle] = useAudio(audio);
 
 //     return (
 //         <div>
@@ -86,3 +73,5 @@ const useAudio = (audio) => {
 //         </div>
 //     );
 // };
+
+// export default Player;
