@@ -7,7 +7,6 @@ import { isBase64 } from 'url-safe-base64';
 export default function NatiqContents() {
     const [loading, setLoading] = useState(false);
     const [audio, setAudio] = useState();
-    // const [lastWordAudio, setLastWordAudio] = useState();
     const [errorMSG, setErrorMSG] = useState("");
 
 

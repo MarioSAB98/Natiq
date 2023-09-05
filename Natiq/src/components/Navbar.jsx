@@ -5,7 +5,8 @@ const Navbar = () => {
     return (
 
         <div className="w-full navbar bg-primary text-white"    >
-            <div className="flex-1 px-2 mx-2 cursor-default">Natiq</div>
+            <img src="/assets/logo.webp" alt="rdi-logo"></img>
+            <div className="flex-1 px-2 mx-2 cursor-default"></div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal">
                     <li>

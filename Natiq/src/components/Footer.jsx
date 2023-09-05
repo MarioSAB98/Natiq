@@ -4,7 +4,7 @@ export default function Footer() {
     return (
         <footer className="footer footer-center p-10 bg-primary text-primary-content">
             <aside>
-                <img src="https://cdn-gceod.nitrocdn.com/kaLRsxNjbgXNaKuhdzkUDQAgUbeNnCIm/assets/images/optimized/rev-643eeb1/wp-content/uploads/2020/10/logo-white-e1604579113422.png"></img>
+                <img src="/assets/logo.webp" alt="rdi-logo"></img>
                 <p className="font-bold">
                     The Engineering Company for the Development of Digital Systems. <br />Providing reliable tech since 1993
                 </p>
