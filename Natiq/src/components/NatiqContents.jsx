@@ -21,7 +21,7 @@ export default function NatiqContents() {
                     <button disabled={loading ? "disabled" : ""}
                         onClick={() => { callNatiq(setLoading, setAudio, setErrorMSG) }}
                         className=" shadow-[0px_0px_20px_5px_rgba(0,0,0,0.3)] btn btn-primary m-8 w-32 text-white">Echo</button>
-                    <button disabled={loading ? "disabled" : ""} onClick={() => { clear(setErrorMSG) }} className=" shadow-[0px_0px_20px_5px_rgba(0,0,0,0.3)] btn btn-primary m-8 w-32 text-white">Reset</button>
+                    <button disabled={loading ? "disabled" : ""} onClick={() => { clear(setAudio) }} className=" shadow-[0px_0px_20px_5px_rgba(0,0,0,0.3)] btn btn-primary m-8 w-32 text-white">Clear</button>
                 </div>
             </div>
             {audio && <Player audio={audio} />}
@@ -38,8 +38,7 @@ export default function NatiqContents() {
 }
 
 
-const clear = (setErrorMSG) => {
-    setErrorMSG("");
+const clear = (setAudio) => {
     var textArea = document.getElementById("textArea");
     textArea.value = "";
 }
@@ -81,6 +80,9 @@ const callNatiq = (setLoading, setAudio, setErrorMSG) => {
 
             if (description) {
                 setErrorMSG(description);
+                setTimeout(function () {
+                    setErrorMSG("");;
+                }, 5000);
             }
 
         })
