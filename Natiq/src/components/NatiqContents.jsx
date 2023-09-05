@@ -8,14 +8,21 @@ export default function NatiqContents() {
     const [loading, setLoading] = useState(false);
     const [audio, setAudio] = useState();
     const [errorMSG, setErrorMSG] = useState("");
+    const [val, setVal] = useState("");
 
 
+    const checkChars = (e) => {
+        const regex = /^[\u0621-\u064A ]+$/;
+        if (e.target.value === "" || regex.test(e.target.value)) {
+            setVal(e.target.value);
+        }
+    }
 
 
     return (
         <>
             <div dir="ltr" className="relative w-full">
-                <textarea disabled={loading ? true : false} id="textArea" dir="rtl" className=" shadow-[0px_0px_20px_0px_rgba(0,0,0,0.3)] textarea textarea-primary m-12 mb-0 h-80 w-[80%] text-right" placeholder="اكتب النص هنا..."></textarea>
+                <textarea value={val} onChange={checkChars} disabled={loading ? true : false} id="textArea" dir="rtl" className=" shadow-[0px_0px_20px_0px_rgba(0,0,0,0.3)] textarea textarea-primary m-12 mb-0 h-80 w-[80%] text-right" placeholder="اكتب النص هنا..."></textarea>
                 {loading && <span className="absolute top-[40%] left-[50%] loading loading-spinner text-primary"></span>}
                 <div className="flex-row">
                     <button disabled={loading ? "disabled" : ""}
