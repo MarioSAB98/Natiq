@@ -26,9 +26,9 @@ export default function NatiqContents() {
                 {loading && <span className="absolute top-[40%] left-[50%] loading loading-spinner text-primary"></span>}
                 <div className="flex-row">
                     <button disabled={loading ? "disabled" : ""}
-                        onClick={() => { callNatiq(setLoading, setAudio, setErrorMSG) }}
+                        onClick={() => { callNatiq(setLoading, setAudio, setErrorMSG, val) }}
                         className=" shadow-[0px_0px_20px_5px_rgba(0,0,0,0.3)] btn btn-primary m-8 w-32 text-white">Echo</button>
-                    <button disabled={loading ? "disabled" : ""} onClick={() => { clear(setAudio) }} className=" shadow-[0px_0px_20px_5px_rgba(0,0,0,0.3)] btn btn-primary m-8 w-32 text-white">Clear</button>
+                    <button disabled={loading ? "disabled" : ""} onClick={() => { clear(setAudio, setVal) }} className=" shadow-[0px_0px_20px_5px_rgba(0,0,0,0.3)] btn btn-primary m-8 w-32 text-white">Clear</button>
                 </div>
             </div>
             {audio && <Player audio={audio} />}
@@ -45,17 +45,15 @@ export default function NatiqContents() {
 }
 
 
-const clear = (setAudio) => {
-    var textArea = document.getElementById("textArea");
-    textArea.value = "";
+const clear = (setAudio, setVal) => {
+    setVal("");
 }
 
-const callNatiq = (setLoading, setAudio, setErrorMSG) => {
+const callNatiq = (setLoading, setAudio, setErrorMSG, val) => {
     setAudio("");
     setErrorMSG("");
     setLoading(true);
-    let textArea = document.getElementById("textArea");
-    let textData = textArea.value;
+    let textData = val;
 
     if (textArea.value) {
         let lastWord = textArea.value.split(" ");
