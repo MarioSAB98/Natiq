@@ -5,7 +5,7 @@ export default function AudioPlayer({ audio }) {
     const [playing, toggle] = useAudio(audio);
 
     return (
-        <div className="w-full">
+        <div className="w-full my-8">
             <div className='flex  bg-primary shadow-[0px_0px_20px_5px_rgba(0,0,0,0.3)] shadow-primary rounded-full overflow-hidden mx-auto w-[40%] h-16'>
                 <div className="flex flex-col w-full">
 
@@ -37,12 +37,6 @@ export default function AudioPlayer({ audio }) {
 }
 
 
-// if (audio) {
-//     var snd = new Audio("data:audio/wav;base64," + audio);
-//     snd.play();
-// }
-
-
 const useAudio = (audio) => {
     let speech = useRef(new Audio("data:audio/wav;base64," + audio));
     const [playing, setPlaying] = useState(true);
@@ -63,15 +57,3 @@ const useAudio = (audio) => {
 
     return [playing, toggle];
 };
-
-// const Player = ({ audio }) => {
-//     const [playing, toggle] = useAudio(audio);
-
-//     return (
-//         <div>
-//             <button onClick={toggle}>{playing ? "Pause" : "Play"}</button>
-//         </div>
-//     );
-// };
-
-// export default Player;

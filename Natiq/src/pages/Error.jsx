@@ -1,30 +1,40 @@
-import { Link } from "react-router-dom";
+import React from "react";
 
-export default function Error() {
+const Error = () => {
     return (
         <>
-            <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8">
-                    <div className="flex justify-center items-center h-screen">
-                        <div>
-                            <h1 className="lg:text-6xl font-bold text-2xl text-red-600">Oops!</h1>
-                            <p className="text-xl text-black">
-                                Sorry, an unexpected error has occurred.
-                            </p>
-                            <p className="text-3xl text-white">
-                            </p>
-                            <div className="mt-4">
-                                <Link
-                                    to="/"
-                                    className="px-5 py-2 bg-gray-400 rounded-md hover:bg-gray-300"
+            <section className="relative z-10 bg-primary py-[120px]">
+                <div className="container w-full">
+                    <div className="flex -mx-4">
+                        <div className="w-full px-4">
+                            <div className="mx-auto max-w-[400px] text-center">
+                                <h2 className="mb-2 text-[50px] font-bold leading-none text-white sm:text-[80px] md:text-[100px]">
+                                    404
+                                </h2>
+                                <h4 className="mb-3 text-[22px] font-semibold leading-tight text-white">
+                                    Oops! That page can't be found
+                                </h4>
+                                <a
+                                    href="/#"
+                                    className="inline-block px-8 py-3 text-base font-semibold text-center text-white transition border border-white rounded-lg hover:bg-white hover:text-primary"
                                 >
-                                    go back
-                                </Link>
+                                    Go to Home
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div className="absolute top-0 left-0 flex items-center justify-between w-full h-full space-x-5 -z-10 md:space-x-8 lg:space-x-14">
+                    <div className="h-full w-1/3 bg-gradient-to-t from-[#FFFFFF14] to-[#C4C4C400]" />
+                    <div className="flex w-1/3 h-full">
+                        <div className="h-full w-1/2 bg-gradient-to-b from-[#FFFFFF14] to-[#C4C4C400]" />
+                        <div className="h-full w-1/2 bg-gradient-to-t from-[#FFFFFF14] to-[#C4C4C400]" />
+                    </div>
+                    <div className="h-full w-1/3 bg-gradient-to-b from-[#FFFFFF14] to-[#C4C4C400]" />
+                </div>
+            </section>
         </>
     );
-}
+};
+
+export default Error;
